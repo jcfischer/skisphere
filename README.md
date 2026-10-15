@@ -10,12 +10,16 @@ boundaries, Milky Way outline, Messier data, world coastlines, a gazetteer — i
 
 ```sh
 bun install
-bun run build     # tools/build-data.ts → src/data/sky.generated.ts, then bundles public/skisphere.js
-bun run serve     # http://127.0.0.1:8123
+bun run dev       # bundle watcher + the page on http://127.0.0.1:8080
 ```
 
-`bun run dev` rebuilds the bundle on change. `bun run check` runs every gate this repository
-commits to: typecheck, ephemeris verification, unit tests, browser checks, screenshots.
+`dev` builds once, then rebuilds `public/skisphere.js` on any change in `src/` and serves
+`public/` from the same command. It listens on 8080 unless you say otherwise
+(`PORT=5173 bun run dev`), and the address it prints is the one to open — the browser-check
+and screenshot harnesses use 8123 for themselves, so nothing answers there while you work.
+`bun run serve` serves an already-built page without the watcher; `bun run build` regenerates
+the catalog and the bundle once. `bun run check` runs every gate this repository commits to:
+typecheck, ephemeris verification, unit tests, browser checks, screenshots.
 
 ## What is on the screen
 
