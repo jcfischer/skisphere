@@ -1,0 +1,174 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+
+
+*******************************************************************************
+Ephemeris / API_USER Thu Oct 15 05:24:50 2026 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: Venus (299)                     {source: DE441}
+Center body name: Earth (399)                     {source: DE441}
+Center-site name: GEOCENTRIC
+*******************************************************************************
+Start time      : A.D. 2024-Jan-01 00:00:00.0000 UT      
+Stop  time      : A.D. 2032-Dec-31 00:00:00.0000 UT      
+Step-size       : 67680 minutes
+*******************************************************************************
+Target pole/equ : IAU_VENUS                       {East-longitude positive}
+Target radii    : 6051.8, 6051.8, 6051.8 km       {Equator_a, b, pole_c}       
+Center geodetic : 0.0, 0.0, -6378.137             {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.0, 0.0, 0.0                   {E-lon(deg),Dxy(km),Dz(km)}
+Center pole/equ : ITRF93                          {East-longitude positive}
+Center radii    : 6378.137, 6378.137, 6356.752 km {Equator_a, b, pole_c}       
+Target primary  : Sun
+Vis. interferer : MOON (R_eq= 1737.400) km        {source: DE441}
+Rel. light bend : Sun                             {source: DE441}
+Rel. lght bnd GM: 1.3271E+11 km^3/s^2                                          
+Atmos refraction: NO (AIRLESS)
+RA format       : HMS
+Time format     : CAL 
+Calendar mode   : Mixed Julian/Gregorian
+EOP file        : eop.261014.p270110                                           
+EOP coverage    : DATA-BASED 1962-JAN-20 TO 2026-OCT-14. PREDICTS-> 2027-JAN-09
+Units conversion: 1 au= 149597870.700 km, c= 299792.458 km/s, 1 day= 86400.0 s 
+Table cut-offs 1: Elevation (-90.0deg=NO ),Airmass (>38.000=NO), Daylight (NO )
+Table cut-offs 2: Solar elongation (  0.0,180.0=NO ),Local Hour Angle( 0.0=NO )
+Table cut-offs 3: RA/DEC angular rate (     0.0=NO )                           
+*******************************************************************************
+ Date__(UT)__HR:MN     R.A._____(ICRF)_____DEC
+**********************************************
+$$SOE
+ 2024-Jan-01 00:00     16 02 26.45 -18 42 11.4
+ 2024-Feb-17 00:00     20 09 10.34 -20 16 13.9
+ 2024-Apr-04 00:00     23 55 51.26 -02 04 09.1
+ 2024-May-21 00:00     03 35 58.56 +18 41 06.5
+ 2024-Jul-07 00:00     07 43 59.53 +22 23 58.3
+ 2024-Aug-23 00:00     11 31 14.69 +04 29 14.7
+ 2024-Oct-09 00:00     15 05 20.96 -18 06 47.6
+ 2024-Nov-25 00:00     19 07 48.69 -24 57 20.4
+ 2025-Jan-11 00:00     22 38 52.37 -09 10 55.0
+ 2025-Feb-27 00:00     00 27 46.27 +09 55 29.4
+ 2025-Apr-15 00:00     23 32 34.87 +01 37 46.8
+ 2025-Jun-01 00:00     01 34 13.93 +07 31 14.2
+ 2025-Jul-18 00:00     04 54 05.60 +20 24 32.2
+ 2025-Sep-03 00:00     08 48 26.41 +18 03 35.6
+ 2025-Oct-20 00:00     12 29 01.12 -01 27 43.7
+ 2025-Dec-06 00:00     16 17 22.84 -20 49 00.9
+ 2026-Jan-22 00:00     20 31 40.08 -20 04 57.6
+ 2026-Mar-10 00:00     00 16 45.49 +00 31 39.7
+ 2026-Apr-26 00:00     03 58 27.98 +21 11 33.2
+ 2026-Jun-12 00:00     08 01 53.37 +22 33 50.4
+ 2026-Jul-29 00:00     11 25 39.15 +03 57 15.2
+ 2026-Sep-14 00:00     13 51 36.64 -16 53 38.9
+ 2026-Oct-31 00:00     13 30 15.25 -14 55 56.7
+ 2026-Dec-17 00:00     14 30 49.66 -11 45 10.3
+ 2027-Feb-02 00:00     17 50 31.57 -20 58 28.8
+ 2027-Mar-21 00:00     21 42 40.66 -14 10 50.0
+ 2027-May-07 00:00     01 16 33.92 +06 18 07.3
+ 2027-Jun-23 00:00     05 04 55.45 +22 21 29.7
+ 2027-Aug-09 00:00     09 11 19.59 +17 27 55.3
+ 2027-Sep-25 00:00     12 50 26.28 -04 14 58.7
+ 2027-Nov-11 00:00     16 39 58.94 -22 56 24.1
+ 2027-Dec-28 00:00     20 50 44.54 -19 37 00.7
+ 2028-Feb-13 00:00     00 22 36.01 +02 20 35.8
+ 2028-Mar-31 00:00     03 31 36.79 +22 49 52.7
+ 2028-May-17 00:00     05 08 47.26 +26 44 30.9
+ 2028-Jul-03 00:00     04 13 43.63 +16 56 36.6
+ 2028-Aug-19 00:00     06 45 23.82 +20 13 49.3
+ 2028-Oct-05 00:00     10 19 07.68 +11 03 06.0
+ 2028-Nov-21 00:00     13 52 25.39 -09 40 17.9
+ 2029-Jan-07 00:00     17 52 09.51 -23 03 27.3
+ 2029-Feb-23 00:00     21 58 58.90 -13 40 22.3
+ 2029-Apr-11 00:00     01 36 27.16 +08 57 55.5
+ 2029-May-28 00:00     05 31 23.00 +24 03 03.4
+ 2029-Jul-14 00:00     09 33 59.47 +16 12 12.9
+ 2029-Aug-30 00:00     13 00 02.62 -06 31 14.4
+ 2029-Oct-16 00:00     16 27 08.85 -24 57 02.5
+ 2029-Dec-02 00:00     19 26 15.78 -24 49 13.2
+ 2030-Jan-18 00:00     18 40 54.14 -16 45 15.0
+ 2030-Mar-06 00:00     20 01 58.11 -16 56 14.3
+ 2030-Apr-22 00:00     23 16 52.83 -05 33 32.7
+ 2030-Jun-08 00:00     02 42 03.53 +13 42 29.6
+ 2030-Jul-25 00:00     06 37 22.49 +22 50 21.7
+ 2030-Sep-10 00:00     10 33 57.78 +10 26 25.8
+ 2030-Oct-27 00:00     14 11 34.87 -12 17 02.7
+ 2030-Dec-13 00:00     18 16 42.67 -24 14 48.2
+ 2031-Jan-29 00:00     22 20 27.68 -11 59 33.5
+ 2031-Mar-17 00:00     01 52 17.01 +11 42 45.4
+ 2031-May-03 00:00     05 37 15.43 +25 52 38.1
+ 2031-Jun-19 00:00     08 56 41.01 +19 00 22.2
+ 2031-Aug-05 00:00     09 27 00.13 +08 04 55.1
+ 2031-Sep-21 00:00     09 08 01.57 +12 02 30.0
+ 2031-Nov-07 00:00     11 55 37.03 +01 40 58.5
+ 2031-Dec-24 00:00     15 24 43.12 -16 28 58.8
+ 2032-Feb-09 00:00     19 29 24.57 -21 38 49.5
+ 2032-Mar-27 00:00     23 21 22.44 -05 42 06.5
+ 2032-May-13 00:00     02 58 41.43 +16 02 49.3
+ 2032-Jun-29 00:00     07 04 01.45 +23 30 37.2
+ 2032-Aug-15 00:00     10 57 07.13 +08 13 10.0
+ 2032-Oct-01 00:00     14 29 00.74 -15 01 58.9
+ 2032-Nov-17 00:00     18 27 47.29 -25 36 58.2
+$$EOE
+*******************************************************************************
+Column meaning:
+ 
+TIME
+
+  Times PRIOR to 1962 are UT1, a mean-solar time closely related to the
+prior but now-deprecated GMT. Times AFTER 1962 are in UTC, the current
+civil or "wall-clock" time-scale. UTC is kept within 0.9 seconds of UT1
+using integer leap-seconds for 1972 and later years.
+
+  Conversion from the internal Barycentric Dynamical Time (TDB) of solar
+system dynamics to the non-uniform civil UT time-scale requested for output
+has not been determined for UTC times after the next July or January 1st.
+Therefore, the last known leap-second is used as a constant over future
+intervals.
+
+  Time tags refer to the UT time-scale conversion from TDB on Earth
+regardless of observer location within the solar system, although clock
+rates may differ due to the local gravity field and no analog to "UT"
+may be defined for that location.
+
+  Any 'b' symbol in the 1st-column denotes a B.C. date. First-column blank
+(" ") denotes an A.D. date.
+ 
+CALENDAR SYSTEM
+
+  Mixed calendar mode was active such that calendar dates after AD 1582-Oct-15
+(if any) are in the modern Gregorian system. Dates prior to 1582-Oct-5 (if any)
+are in the Julian calendar system, which is automatically extended for dates
+prior to its adoption on 45-Jan-1 BC.  The Julian calendar is useful for
+matching historical dates. The Gregorian calendar more accurately corresponds
+to the Earth's orbital motion and seasons. A "Gregorian-only" calendar mode is
+available if such physical events are the primary interest.
+
+  NOTE: "n.a." in output means quantity "not available" at the print-time.
+ 
+ 'R.A._____(ICRF)_____DEC' =
+  Astrometric right ascension and declination of the target center with
+respect to the observing site (coordinate origin) in the reference frame of
+the planetary ephemeris (ICRF). Compensated for down-leg light-time delay
+aberration.
+
+  Units: RA  in hours-minutes-seconds of time,    HH MM SS.ff{ffff}
+         DEC in degrees-minutes-seconds of arc,  sDD MN SC.f{ffff}
+
+Computations by ...
+
+    Solar System Dynamics Group, Horizons On-Line Ephemeris System
+    4800 Oak Grove Drive, Jet Propulsion Laboratory
+    Pasadena, CA  91109   USA
+
+    General site: https://ssd.jpl.nasa.gov/
+    Mailing list: https://ssd.jpl.nasa.gov/email_list.html
+    System news : https://ssd.jpl.nasa.gov/horizons/news.html
+    User Guide  : https://ssd.jpl.nasa.gov/horizons/manual.html
+    Connect     : browser        https://ssd.jpl.nasa.gov/horizons/app.html#/x
+                  API            https://ssd-api.jpl.nasa.gov/doc/horizons.html
+                  command-line   telnet ssd.jpl.nasa.gov 6775
+                  e-mail/batch   https://ssd.jpl.nasa.gov/ftp/ssd/horizons_batch.txt
+                  scripts        https://ssd.jpl.nasa.gov/ftp/ssd/SCRIPTS
+    Inquiries   : Jon.D.Giorgini@jpl.nasa.gov
+
+*******************************************************************************

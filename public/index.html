@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Skisphere — the sky from anywhere on Earth</title>
+    <meta
+      name="description"
+      content="A planetarium in the browser: stars, constellation figures, the Milky Way, Messier objects and the planets for any place on Earth and any instant."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23070b18'/%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%2393b4e8'/%3E%3Cpath d='M6 19l5-6 4 4 5-8 6 10' fill='none' stroke='%2393b4e8' stroke-width='1.2'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <header id="topbar">
+      <div id="brand">
+        <strong>Skisphere</strong>
+        <span>the sky, from anywhere on Earth</span>
+      </div>
+      <div id="headline">
+        <div id="place-name" class="lead">Zürich</div>
+        <div id="place-coords" class="dim">47.3769°N 8.5417°E · 408 m</div>
+      </div>
+      <div id="headline2">
+        <div id="time-line" class="lead">—</div>
+        <div id="follow" class="dim">following the clock</div>
+      </div>
+      <div id="status">
+        <div id="sky-status" class="dim">—</div>
+        <div id="moon-status" class="dim">—</div>
+      </div>
+      <div id="top-actions">
+        <button id="copy-link" type="button">copy link</button>
+        <button id="toggle-help" type="button" title="Keyboard shortcuts (?)">keys</button>
+        <button id="toggle-left" type="button" title="Toggle the place and time panel">place</button>
+        <button id="toggle-right" type="button" title="Toggle the object panel">object</button>
+      </div>
+    </header>
+
+    <p id="note" hidden></p>
+
+    <main id="stage">
+      <canvas id="sky" aria-label="Sky map for the selected place and instant"></canvas>
+      <div id="pointer-readout">move the pointer over the sky for altitude and azimuth</div>
+
+      <section id="left" class="panel">
+        <details open>
+          <summary>Place</summary>
+          <canvas id="map" aria-label="World map, click to move the observer"></canvas>
+          <p class="hint">Click or drag the map. Latitude and longitude are WGS84, east positive.</p>
+          <div class="grid2">
+            <label>Latitude<input id="lat" type="number" step="0.01" min="-90" max="90" inputmode="decimal" /></label>
+            <label>Longitude<input id="lon" type="number" step="0.01" min="-180" max="180" inputmode="decimal" /></label>
+            <label>Elevation m<input id="elev" type="number" step="10" inputmode="numeric" /></label>
+            <label>City or place<input id="city" type="text" list="city-list" autocomplete="off" /></label>
+          </div>
+          <datalist id="city-list"></datalist>
+          <button id="where" type="button">Use my location</button>
+          <div id="location-rows"></div>
+        </details>
+
+        <details open>
+          <summary>Instant</summary>
+          <input id="time" type="datetime-local" step="60" />
+          <label class="inline">Wall clock
+            <select id="time-mode"></select>
+          </label>
+          <div class="btnrow">
+            <button class="nudge" data-minutes="-1440" type="button">−1 d</button>
+            <button class="nudge" data-minutes="-60" type="button">−1 h</button>
+            <button class="nudge" data-minutes="-10" type="button">−10 m</button>
+            <button id="now" type="button">now</button>
+            <button class="nudge" data-minutes="10" type="button">+10 m</button>
+            <button class="nudge" data-minutes="60" type="button">+1 h</button>
+            <button class="nudge" data-minutes="1440" type="button">+1 d</button>
+          </div>
+          <div class="btnrow">
+            <button id="play" type="button">play</button>
+            <label class="inline">Speed<select id="rate"></select></label>
+          </div>
+          <canvas id="strip" aria-label="Sun and Moon altitude over the last and next twelve hours"></canvas>
+          <p class="hint" id="darkness">—</p>
+        </details>
+
+        <details>
+          <summary>Display</summary>
+          <label class="inline">Projection<select id="projection"></select></label>
+          <label class="slider">Stars <span id="mag-readout">V ≤ 6.0</span>
+            <input id="mag" type="range" min="0" max="6.5" step="0.25" />
+          </label>
+          <label class="slider">Names <span id="label-mag-readout">names at V ≤ 3.0</span>
+            <input id="label-mag" type="range" min="0" max="5.5" step="0.25" />
+          </label>
+          <label class="slider">Zoom <span id="zoom-readout">1.00×</span>
+            <input id="zoom" type="range" min="0.35" max="6" step="0.01" />
+          </label>
+          <label class="slider">Rotation <span id="rotation-readout">0° at top</span>
+            <input id="rotation" type="range" min="0" max="359" step="1" />
+          </label>
+          <button id="reset" type="button">Reset the view</button>
+        </details>
+
+        <details open>
+          <summary>Layers</summary>
+          <div id="layer-list"></div>
+        </details>
+      </section>
+
+      <section id="right" class="panel">
+        <div class="card">
+          <label class="search">Find
+            <input id="search" type="search" placeholder="Vega, M42, Andromeda, Jupiter, Tromsø…" autocomplete="off" />
+          </label>
+          <div id="search-results" class="results"></div>
+        </div>
+        <div id="details" class="card"></div>
+        <button id="clear-selection" type="button" hidden>Clear selection</button>
+        <details open>
+          <summary>Tonight's bodies</summary>
+          <div id="events"></div>
+          <p class="hint">
+            Rise and set are the upper limb crossing an ideal horizon, with refraction and the dip for
+            this elevation. Transit is the crossing of the meridian. All in the wall clock chosen above.
+          </p>
+        </details>
+        <details open>
+          <summary>Twilight</summary>
+          <div id="twilight"></div>
+          <p class="hint">Evening is the next downward crossing, morning the next upward one.</p>
+        </details>
+        <details id="help" class="card">
+          <summary>Keys</summary>
+          <ul class="keys">
+            <li><kbd>←</kbd><kbd>→</kbd> time by 10 min, <kbd>⇧</kbd> 1 h, <kbd>⌥</kbd> 1 d</li>
+            <li><kbd>↑</kbd><kbd>↓</kbd> star magnitude limit</li>
+            <li><kbd>space</kbd> run or hold time · <kbd>0</kbd> follow the clock</li>
+            <li><kbd>n</kbd><kbd>e</kbd><kbd>s</kbd><kbd>w</kbd> put that bearing at the top</li>
+            <li><kbd>l</kbd> figures · <kbd>c</kbd> names · <kbd>b</kbd> boundaries · <kbd>m</kbd> Milky Way</li>
+            <li><kbd>r</kbd> star names · <kbd>d</kbd> Messier · <kbd>p</kbd> planets · <kbd>t</kbd> twinkle</li>
+            <li><kbd>j</kbd> ecliptic · <kbd>q</kbd> equator · <kbd>g</kbd> alt/az grid · <kbd>f</kbd> refraction</li>
+            <li><kbd>esc</kbd> clear the selection · <kbd>?</kbd> this list</li>
+            <li>drag rotates the horizon ring, wheel zooms, double-click resets</li>
+          </ul>
+        </details>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <span id="caption">—</span>
+      <span>
+        Positions are precessed and nutated from J2000 to the equinox of date; planet and Moon places are
+        topocentric. Catalogue and provenance: <code>data/SOURCES.md</code>.
+      </span>
+    </footer>
+
+    <script src="./skisphere.js" type="module"></script>
+  </body>
+</html>

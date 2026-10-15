@@ -1,0 +1,6 @@
+node_modules/
+public/skisphere.js
+public/skisphere.js.map
+.artifacts/
+*.log
+.DS_Store

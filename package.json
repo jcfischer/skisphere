@@ -1,0 +1,29 @@
+{
+  "name": "skisphere",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "HTML5 planetarium: constellations and planets from any point on Earth",
+  "scripts": {
+    "data": "bun tools/build-data.ts",
+    "bundle": "bun build src/main.ts --outfile public/skisphere.js --target browser",
+    "build": "bun run data && bun run bundle",
+    "build:min": "bun run data && bun build src/main.ts --outdir public --target browser --minify",
+    "dev": "bun build src/main.ts --outfile public/skisphere.js --target browser --watch",
+    "serve": "bun tools/serve.ts",
+    "check": "bun run typecheck && bun run verify && bun run test && bun run browser && bun run shot",
+    "typecheck": "tsc --noEmit",
+    "verify": "bun tools/verify-astro.ts",
+    "test": "bun test",
+    "shot": "bun tools/screenshot.ts",
+    "browser": "bun run bundle && bun tools/browser-check.ts"
+  },
+  "dependencies": {
+    "astronomy-engine": "^2.1.19"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.3",
+    "playwright": "1.57.0",
+    "typescript": "^7.0.2"
+  }
+}

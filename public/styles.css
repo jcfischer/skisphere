@@ -1,0 +1,485 @@
+/* Skisphere — dark UI for a dark sky. The canvas owns the viewport; the panels float over it. */
+
+:root {
+  --bg: #05070f;
+  --panel: rgba(12, 16, 28, 0.82);
+  --panel-solid: #0c101c;
+  --line: rgba(148, 168, 205, 0.22);
+  --text: #e6ebf7;
+  --dim: #9fb0cc;
+  --accent: #ffd77a;
+  --accent-2: #93b4e8;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.45 var(--sans);
+  overscroll-behavior: none;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100vh;
+}
+
+/* Rows are named explicitly: #note leaves the flow when it is empty, and an implicit
+   placement would slide the stage up into an auto row and give it no height. */
+#topbar {
+  grid-row: 1;
+}
+
+#note {
+  grid-row: 2;
+}
+
+#stage {
+  grid-row: 3;
+  min-height: 0;
+}
+
+#footer {
+  grid-row: 4;
+}
+
+#topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  align-items: baseline;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #080b16, #05070f);
+}
+
+#brand {
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+}
+
+#brand strong {
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+#brand span {
+  color: var(--dim);
+  font-size: 11px;
+}
+
+#headline,
+#headline2,
+#status {
+  display: flex;
+  flex-direction: column;
+  min-width: 148px;
+}
+
+.lead {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dim {
+  color: var(--dim);
+  font-size: 11.5px;
+}
+
+#time-line {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+#top-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+button {
+  font: inherit;
+  color: var(--text);
+  background: rgba(120, 150, 210, 0.12);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: rgba(140, 175, 235, 0.22);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+#note {
+  margin: 0;
+  padding: 6px 14px;
+  background: rgba(255, 215, 122, 0.12);
+  border-bottom: 1px solid rgba(255, 215, 122, 0.3);
+  color: var(--accent);
+  font-size: 12px;
+}
+
+#stage {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+#sky {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+
+#pointer-readout {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(8, 11, 20, 0.72);
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.panel {
+  position: absolute;
+  top: 10px;
+  bottom: 34px;
+  width: 296px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+#left {
+  left: 10px;
+}
+
+#right {
+  right: 10px;
+}
+
+body.hide-left #left,
+body.hide-right #right {
+  display: none;
+}
+
+.panel details,
+.panel .card {
+  background: var(--panel);
+  backdrop-filter: blur(9px);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px 10px;
+}
+
+.panel summary {
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  list-style: none;
+}
+
+.panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.panel summary::before {
+  content: "▸ ";
+}
+
+.panel details[open] > summary::before {
+  content: "▾ ";
+}
+
+.panel canvas {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+#strip {
+  height: 76px;
+}
+
+.hint {
+  color: var(--dim);
+  font-size: 11px;
+  margin: 6px 0 0;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--dim);
+}
+
+label.inline {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+label.slider {
+  margin-top: 6px;
+}
+
+label.slider span {
+  font-family: var(--mono);
+  color: var(--text);
+  font-size: 11px;
+}
+
+input,
+select {
+  font: inherit;
+  font-size: 12px;
+  color: var(--text);
+  background: rgba(6, 9, 18, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 6px;
+  min-width: 0;
+}
+
+input[type="range"] {
+  padding: 0;
+  accent-color: var(--accent);
+}
+
+input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 14px;
+  height: 14px;
+}
+
+#time {
+  width: 100%;
+  font-family: var(--mono);
+}
+
+.btnrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+  align-items: center;
+}
+
+.btnrow button {
+  font-size: 11.5px;
+  padding: 3px 7px;
+  font-family: var(--mono);
+}
+
+#layer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 6px;
+}
+
+#layer-list .row {
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.row input {
+  flex: none;
+}
+
+table.kv {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-size: 11.5px;
+}
+
+table.kv th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--dim);
+  padding: 2px 8px 2px 0;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+table.kv td {
+  text-align: right;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  padding: 2px 0;
+}
+
+table.kv tr.up td {
+  color: var(--accent);
+}
+
+#details h3 {
+  margin: 2px 0 0;
+  font-size: 15px;
+}
+
+#details .sub {
+  margin: 1px 0 0;
+  color: var(--accent-2);
+  font-size: 11.5px;
+}
+
+#details .note,
+.note {
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.search {
+  margin-bottom: 4px;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.results:empty {
+  display: none;
+}
+
+.match {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  text-align: left;
+  padding: 4px 7px;
+}
+
+.match strong {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.match small {
+  color: var(--dim);
+  font-size: 10.5px;
+  font-family: var(--mono);
+}
+
+.keys {
+  margin: 6px 0 0;
+  padding-left: 16px;
+  color: var(--dim);
+  font-size: 11.5px;
+}
+
+.keys kbd {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 3px;
+  color: var(--text);
+}
+
+#footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  justify-content: space-between;
+  padding: 5px 14px 7px;
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-size: 10.8px;
+}
+
+#footer code {
+  font-family: var(--mono);
+  color: var(--accent-2);
+}
+
+@media (max-width: 1080px) {
+  .panel {
+    width: 258px;
+    font-size: 12px;
+  }
+  #headline2,
+  #status {
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 820px) {
+  #topbar {
+    gap: 8px 14px;
+    padding: 6px 10px;
+  }
+  .panel {
+    width: min(88vw, 296px);
+    bottom: 46px;
+  }
+  #left {
+    left: 6px;
+  }
+  #right {
+    right: 6px;
+  }
+  #pointer-readout {
+    font-size: 10.5px;
+    max-width: 92vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:active {
+    transform: none;
+  }
+}
