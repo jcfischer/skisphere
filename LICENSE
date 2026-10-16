@@ -23,9 +23,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-The repository bundles third-party sky and map data under its own terms: the star catalog,
-constellation figures and boundaries, Milky Way outline and Messier data from d3-celestial
-(MIT, see data/LICENSE.d3-celestial.txt) and the coastline outlines from Natural Earth
-(public domain). Provenance is recorded in data/SOURCES.md. This license covers the code in
-this repository, not those data files.
