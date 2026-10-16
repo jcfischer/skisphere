@@ -147,3 +147,9 @@ The remaining gates:
 - Messier markers are glyphs, not images, and the Milky Way is an outline, not a photograph.
 - Precession and nutation are IAU 1976 with a truncated nutation series: good to a few tens of
   arcseconds over 1700–2300, which is what the verification above measures.
+
+## License
+
+MIT, in `LICENSE`. The bundled sky and map data keeps its own terms — d3-celestial is MIT
+(`data/LICENSE.d3-celestial.txt`) and the Natural Earth coastlines are public domain — with
+provenance in `data/SOURCES.md`.
